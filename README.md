@@ -1,24 +1,24 @@
-# hm-mm-project
-
-## Project setup
+### 1.克隆远程仓库
+```node
+git clone git@github.com:junchao-XU/heima-renzi.git
 ```
-yarn install
+### 2.进入到此项目
+```node
+cd heima-renzi
 ```
-
-### Compiles and hot-reloads for development
+### 3.下载依赖
+```node
+npm install
+或者
+yarn
 ```
-yarn serve
+### 4.启动项目
+```node
+yarn dev
+或者
+npm run dev
 ```
-
-### Compiles and minifies for production
+### 5.修改配置文件自动重启项目、
+```node
+npm install nodemon -g  ,  npm run start  或者  yarn start
 ```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
