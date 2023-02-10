@@ -26,5 +26,8 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+  .right-menu-item{
+    color: #000;
+  }
 }
 </style>

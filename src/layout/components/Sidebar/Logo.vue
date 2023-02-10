@@ -2,7 +2,8 @@
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
       <router-link key="collapse" class="sidebar-logo-link" to="/">
-        <img src="@/assets/common/下载 (1).png" class="sidebar-logo">
+        <img v-if="!collapse" src="../../../assets/common/下载 (1).png" class="sidebar-logo">
+        <img v-else src="../../../assets/common/minilogin.png" class="sidebar-logo">
       </router-link>
     </transition>
   </div>
@@ -60,10 +61,9 @@ export default {
   // 小图样式
   &.collapse {
     .sidebar-logo {
-      // margin-right: 0px;
-      // width: 32px;
-      // height: 32px;
-      background: url(../../../assets/common/下载.png);
+      margin-right: 0px;
+      width: 32px;
+      height: 32px;
     }
   }
 }

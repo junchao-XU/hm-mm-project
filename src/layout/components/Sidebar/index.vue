@@ -3,6 +3,7 @@
     <logo v-if="showLogo" class="logo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
+
         :default-active="activeMenu"
         :collapse="isCollapse"
         :background-color="variables.menuBg"
@@ -61,4 +62,5 @@ export default {
   background-color: #1495fa;
   height: 70px;
 }
+
 </style>

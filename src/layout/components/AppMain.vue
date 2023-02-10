@@ -1,17 +1,30 @@
 <template>
   <section class="app-main">
+    <div style="height: 34px;">
+      <BreadcrumbsTow class="brd" :name.sync="name" />
+    </div>
     <transition name="fade-transform" mode="out-in">
-      <router-view :key="key" />
+      <router-view :key="name" />
     </transition>
   </section>
 </template>
 
 <script>
+import BreadcrumbsTow from '@/components/BreadcrumbsTow'
 export default {
   name: 'AppMain',
+  components: {
+    BreadcrumbsTow
+  },
   computed: {
-    key() {
-      return this.$route.path
+    name: {
+      get() {
+        return this.$route.name
+      },
+      set(val) {
+        console.log(val)
+        this.$router.push(`${val}`)
+      }
     }
   }
 }
@@ -27,6 +40,9 @@ export default {
 }
 .fixed-header+.app-main {
   padding-top: 50px;
+}
+.brd{
+  position: fixed;
 }
 </style>
 

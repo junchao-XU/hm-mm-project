@@ -5,9 +5,11 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
+      <!-- 放大镜 -->
+      <ScreenFull class="right-menu-item" />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <h4 style="color: aliceblue;margin: 0;">{{ name }}</h4>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -38,7 +40,8 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'name'
     ])
   },
   methods: {
@@ -55,17 +58,17 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  position: fixed;
-    z-index: 999;
-    width: 100%;
-    height: 70px;
-    line-height: 70px;
-    border-radius: 0!important;
-    background: -webkit-gradient(linear,left top,right top,from(#1493fa),to(#01c6fa));
-    background: linear-gradient(90deg,#1493fa,#01c6fa);
+  height: 70px;
+  line-height: 70px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  background: linear-gradient(90deg,#1493fa,#01c6fa);
+  border-bottom: 1px solid #e6e6e6 ;
 
   .hamburger-container {
-    line-height: 46px;
+    line-height: 70px;
     height: 100%;
     float: left;
     cursor: pointer;
@@ -73,30 +76,40 @@ export default {
     -webkit-tap-highlight-color:transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: transparent;
     }
   }
 
   .breadcrumb-container {
+    line-height: 70px;
+    height: 70px;
     float: left;
+    cursor: pointer;
+    transition: background 0.3s;
+    -webkit-tap-highlight-color: transparent;
+    color: #fff;
+
+    &:hover {
+      background: transparent;
+    }
   }
 
   .right-menu {
+    display: flex;
+    align-items: center;
     float: right;
-    height: 100%;
-    line-height: 50px;
+    height: 70px;
 
     &:focus {
       outline: none;
     }
 
     .right-menu-item {
-      display: inline-block;
-      padding: 0 8px;
-      height: 100%;
+      padding: 6px 17px 0px 0px;
+      line-height: 5px;
       font-size: 18px;
-      color: #5a5e66;
-      vertical-align: text-bottom;
+      vertical-align: middle;
+      cursor: pointer;
 
       &.hover-effect {
         cursor: pointer;
@@ -127,7 +140,8 @@ export default {
           position: absolute;
           right: -20px;
           top: 25px;
-          font-size: 12px;
+          font-size: 15px;
+          color: #fff;
         }
       }
     }
