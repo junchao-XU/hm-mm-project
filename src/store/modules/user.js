@@ -1,90 +1,45 @@
-import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
+import { getUserInfoApi } from '@/api/user'
 
 const getDefaultState = () => {
   return {
-    token: getToken(),
-    name: '',
-    avatar: ''
+    token: getToken() || '',
+    userInfo: {}
   }
 }
 
 const state = getDefaultState()
 
 const mutations = {
-  RESET_STATE: (state) => {
-    Object.assign(state, getDefaultState())
-  },
+  // 设置token
   SET_TOKEN: (state, token) => {
+    setToken(token)
     state.token = token
   },
-  SET_NAME: (state, name) => {
-    state.name = name
+  // 清除token
+  REMOVE_TOKEN() {
+    removeToken()
   },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+  // 设置个人信息
+  SET_USER_INFO(state, userInfo) {
+    state.userInfo = userInfo
+  },
+  // 清除个人信息
+  REMOVE_USER_INFO(state) {
+    state.userInfo = {}
   }
 }
 
 const actions = {
-  // user login
-  login({ commit }, userInfo) {
-    const { username, password } = userInfo
-    return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
+  // 获取个人信息
+  async getuserInfo({ commit }) {
+    const userInfo = await getUserInfoApi()
+    commit('SET_USER_INFO', userInfo)
   },
-
-  // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
-          return reject('Verification failed, please Login again.')
-        }
-
-        const { name, avatar } = data
-
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-
-  // user logout
-  logout({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
-        commit('RESET_STATE')
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-
-  // remove token
-  resetToken({ commit }) {
-    return new Promise(resolve => {
-      removeToken() // must remove  token  first
-      commit('RESET_STATE')
-      resolve()
-    })
+  // 退出登录
+  Login_Out({ commit }) {
+    commit('SET_USER_INFO')
+    commit('REMOVE_USER_INFO')
   }
 }
 
@@ -94,4 +49,3 @@ export default {
   mutations,
   actions
 }
-

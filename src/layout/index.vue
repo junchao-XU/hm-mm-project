@@ -5,6 +5,7 @@
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
+        <div style="height: 70px;" />
       </div>
       <app-main />
     </div>

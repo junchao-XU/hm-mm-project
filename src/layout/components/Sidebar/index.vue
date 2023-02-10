@@ -1,6 +1,6 @@
 <template>
   <div :class="{'has-logo':showLogo}">
-    <logo v-if="showLogo" :collapse="isCollapse" />
+    <logo v-if="showLogo" class="logo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
@@ -54,3 +54,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.logo{
+  display: block;
+  background-color: #1495fa;
+  height: 70px;
+}
+</style>
