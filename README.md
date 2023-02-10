@@ -1,4 +1,4 @@
-# heime-toutiao
+# hm-mm-project
 
 ## Project setup
 ```
