@@ -71,7 +71,7 @@
       />
 
       <!-- 表格 -->
-      <el-table :data="CompanysList" stripe style="width: 100%">
+      <el-table :data="CompanysList" style="width: 100%">
         <el-table-column
           prop="id"
           label="序号"
@@ -121,12 +121,12 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" align="center">
           <template v-slot="{row}">
-            <el-button size="small" plain type="primary" icon="el-icon-edit" circle />
+            <el-button size="small" plain type="primary" icon="el-icon-edit" circle @click="edit(row)" />
             <el-tooltip class="item" effect="dark" :content="row.state !== 1 ? '启用':'禁用'" placement="top">
-              <el-button v-if="row.state !== 1" size="small" plain type="success" icon="el-icon-check" circle />
-              <el-button v-else size="small" plain type="warning" icon="el-icon-close" circle />
+              <el-button v-if="row.state !== 1" size="small" plain type="success" icon="el-icon-check" circle @click="set(row,1)" />
+              <el-button v-else size="small" plain type="warning" icon="el-icon-close" circle @click="set(row,2)" />
             </el-tooltip>
-            <el-button size="small" plain type="danger" icon="el-icon-delete" circle />
+            <el-button size="small" plain type="danger" icon="el-icon-delete" circle @click="remove(row)" />
           </template>
         </el-table-column>
       </el-table>
@@ -137,13 +137,13 @@
     </el-card>
 
     <!-- 添加 | 编辑 -->
-    <AddItem :show-dialog.sync="showDialog" />
+    <AddItem ref="Item" :city-list="cityList" :province-list="provinceList" :show-dialog.sync="showDialog" @getCompanysList="getCompanysList" @getcityList="getcityList($event)" />
   </div>
 </template>
 
 <script>
 import AddItem from './components/add-item.vue'
-import { getCompanysListApi, getProvinceApi } from '@/api/enterprise'
+import { getCompanysListApi, getProvinceApi, getCompanysInfoApi, deleteCompanysApi, CompanysStateApi } from '@/api/enterprise'
 import Axios from 'axios'
 
 export default {
@@ -171,7 +171,7 @@ export default {
   watch: {
     'enterpriseData.province': {
       handler(newVal) {
-        this.getcityList()
+        this.getcityList(newVal)
       }
     }
   },
@@ -186,8 +186,8 @@ export default {
       this.provinceList = data.data
     },
     // 获取城市列表
-    getcityList() {
-      Axios.get(`http://ajax-api.itheima.net/api/city?pname=${this.enterpriseData.province}`).then(({ data }) => {
+    getcityList(province) {
+      Axios.get(`http://ajax-api.itheima.net/api/city?pname=${province}`).then(({ data }) => {
         this.cityList = data.data
         this.enterpriseData.city = data.data[0]
       })
@@ -207,6 +207,34 @@ export default {
     // 添加
     add() {
       this.showDialog = true
+    },
+    // 编辑
+    async edit(row) {
+      const res = await getCompanysInfoApi(row.id)
+      this.$refs.Item.formDate = res
+      this.showDialog = true
+    },
+    // 删除
+    remove(row) {
+      this.$confirm('确认删除吗').then(() => {
+        deleteCompanysApi(row.id).then(() => {
+          this.$message.success('删除成功')
+          this.getCompanysList()
+        })
+      })
+    },
+    // 设置状态
+    set(row, state) {
+      this.$confirm(this.stateSet(state)).then(async() => {
+        await CompanysStateApi(row.id, state)
+        this.$message.success(state === 1 ? '启用成功' : '禁用成功')
+        this.getCompanysList()
+      })
+    },
+    // 修改状态的提示内容
+    stateSet(state) {
+      if (state === 1) return '确认启用吗?'
+      else return '确认禁用吗?'
     }
   }
 }

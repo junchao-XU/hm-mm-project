@@ -69,7 +69,9 @@
       height: 100%;
       width: 100% !important;
     }
-
+    .el-submenu .is-opened {
+      background-color: #fff !important;
+    }
     // menu hover
     .submenu-title-noDropdown,
     .el-submenu__title {
@@ -202,6 +204,7 @@
 // when menu collapsed
 .el-menu--vertical {
   & > .el-menu {
+    background-color: #fff !important;
     .svg-icon {
       margin-right: 16px;
     }
@@ -213,9 +216,10 @@
 
   .nest-menu .el-submenu > .el-submenu__title,
   .el-menu-item {
+    background-color: #fff !important;
     &:hover {
       // you can use $subMenuHover
-      background-color: $menuHover !important;
+      background-color: #ecf5ff !important;
     }
   }
 
