@@ -10,6 +10,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 import components from './components'
 Vue.use(components)
 
+// 引入mockServe.js文件 --- mock数据
+import '@/mock/mockRequest'
+
 import '@/styles/index.scss' // global css
 
 import App from './App'
@@ -19,10 +22,9 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
-if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
-}
+// 注册全局过滤器
+import * as filters from '@/filters'
+Object.keys(filters).forEach(item => Vue.filter(item, filters[item]))
 
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
