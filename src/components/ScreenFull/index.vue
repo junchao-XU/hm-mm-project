@@ -2,7 +2,9 @@
   <!-- 放置一个图标 -->
   <div>
     <!-- 放置一个svg的图标 -->
-    <svg-icon icon-class="fullscreen" style="color:#fff; width: 20px; height: 20px" @click="handleFullScreen" />
+    <el-tooltip class="item" effect="dark" content="放大镜" placement="bottom">
+      <svg-icon icon-class="fullscreen" style="color:#fff; width: 20px; height: 20px" @click="handleFullScreen" />
+    </el-tooltip>
   </div>
 </template>
 
