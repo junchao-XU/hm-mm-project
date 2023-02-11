@@ -27,6 +27,7 @@ export default {
   .tips {
     display: flex;
     line-height: 34px;
+    justify-content: space-between;
     // padding: 0px 15px;
     margin-bottom: 15px;
     border-radius: 5px;

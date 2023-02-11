@@ -2,11 +2,11 @@
 export default {
   manger: [
     {
-      id: '2',
+      id: 2,
       value: '超级管理员组'
     },
     {
-      id: '3',
+      id: 3,
       value: '编辑组'
     }
   ],

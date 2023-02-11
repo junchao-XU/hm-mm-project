@@ -2,7 +2,12 @@
   <el-card class="box-card">
     <PageTools>
       <template #left>
-        <el-input v-model="input" size="small" placeholder="根据用户名搜索" />
+        <el-input
+          v-model="input"
+          class="left"
+          size="small"
+          placeholder="根据用户名搜索"
+        />
         <el-button size="mini"> 清空 </el-button>
         <el-button size="mini" type="primary"> 搜索 </el-button>
       </template>
@@ -41,13 +46,13 @@
             type="primary"
             icon="el-icon-edit"
             circle
-            @click="edit(row)"
+            @click="edit(row.id)"
           />
           <el-button
             type="danger"
             icon="el-icon-delete"
             circle
-            @click="deletefn(row)"
+            @click="deletefn(row.id)"
           />
         </template>
       </el-table-column>
@@ -61,7 +66,7 @@
       class="rowspag"
     >
       <el-pagination
-        :current-page="+page.page"
+        :current-page="page.pagesize"
         :total="counts"
         :page-size="page.pagesize"
         :page-sizes="[10, 20, 30, 50]"
@@ -69,12 +74,16 @@
         @current-change="changePage"
       />
     </el-row>
-    <Update :show-dialog.sync="showDialog" />
+    <Update
+      ref="updataDialog"
+      :show-dialog.sync="showDialog"
+      @update="getUserList()"
+    />
   </el-card>
 </template>
 
 <script>
-import { getUserListApi } from '@/api/background'
+import { getUserListApi, deleteUserApi } from '@/api/background'
 import Update from './component/update'
 export default {
   components: {
@@ -87,7 +96,7 @@ export default {
         pagesize: 10 // 每页条数
         // keyword: ''
       },
-      pages: 2, // 总页数
+      pages: 1, // 总页数
       counts: 1, // 总数
       list: [],
       input: '',
@@ -118,6 +127,30 @@ export default {
     changePage(newpage) {
       this.page.page = newpage
       this.getUserList() // 重新获取数据
+    },
+
+    // 点击编辑数据回显
+    edit(id) {
+      this.$refs.updataDialog.getUserInfoDetail(id)
+      this.showDialog = true
+    },
+    // 删除
+    deletefn(id) {
+      console.log(id)
+
+      this.$confirm('确认删除员工吗', {
+        confirmButtonText: '删除',
+        cancelButtonText: '取消'
+      })
+        // eslint-disable-next-line space-before-function-paren
+        .then(async () => {
+          await deleteUserApi(id)
+          if (this.list.length === 1 && this.page.page > 1) {
+            this.page.page--
+          }
+          this.getUserList()
+          this.$message.success('删除用户成功')
+        })
     }
   }
 }
@@ -133,5 +166,8 @@ export default {
 }
 .rowspag {
   margin-top: 20px !important;
+}
+.left {
+  margin-right: 15px;
 }
 </style>
