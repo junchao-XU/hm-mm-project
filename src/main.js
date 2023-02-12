@@ -31,7 +31,7 @@ Vue.use(VueQuillEditor)
 
 // 注册全局过滤器
 import * as filters from '@/filters'
-Object.keys(filters).forEach(item => Vue.filter(item, filters[item]))
+Object.keys(filters).forEach((item) => Vue.filter(item, filters[item]))
 
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
