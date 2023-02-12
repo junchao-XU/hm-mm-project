@@ -44,7 +44,7 @@
         <el-table-column prop="totals" label="题目数量" />
         <el-table-column label="操作" width="240">
           <template #default="{ row }">
-            <el-button type="text" @click="classifyfn(row.id)">
+            <el-button type="text" @click="classifyfn(row)">
               学科分类
             </el-button>
             <el-button type="text" @click="labelfn(row.id)">学科标签</el-button>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { getSubjectListApi } from '@/api/subject'
+import { getSubjectListApi, delSubjectApi } from '@/api/subject'
 import SubjectUpdate from './component/subjectUpdate'
 
 export default {
@@ -85,17 +85,6 @@ export default {
         pagesize: 10
       },
       list: [],
-      // formdata: {
-      //   addDate: '', // 创建日期
-      //   creatorID: '',
-      //   id: '', // 编号
-      //   isFrontDisplay: '', // 前台是否显示
-      //   subjectName: '', // 学科名称
-      //   tags: '', //	标签
-      //   totals: '', //	题目数量
-      //   twoLevelDirectory: '', //	二级目录
-      //   username: '' // 用户名
-      // },
       showDialog: false // 新增弹层
     }
   },
@@ -118,16 +107,37 @@ export default {
       this.counts = data.counts
     },
     // 学科分类
-    classifyfn() {},
+    classifyfn(row) {
+      this.$router.push({
+        path: '/subjects/directorys',
+        query: {
+          id: row.id,
+          name: row.subjectName
+        }
+      })
+    },
     // 学科标签
-    labelfn() {},
+    labelfn() {
+      // this.$router.push({path:'/'})
+    },
     //  编辑
     editfn(id) {
       this.$refs.SubjectUpdate.getsubjectDetail(id)
       this.showDialog = true
     },
     // 删除
-    deletefn() {},
+    async deletefn(id) {
+      this.$confirm('确认删除员工吗', {
+        confirmButtonText: '删除',
+        cancelButtonText: '取消'
+      })
+        // eslint-disable-next-line space-before-function-paren
+        .then(async () => {
+          await delSubjectApi(id)
+          this.getSubjectList()
+          this.$message.success('删除用户成功')
+        })
+    },
     // 搜索
     search() {
       this.flag = true

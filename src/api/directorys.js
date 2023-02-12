@@ -5,19 +5,25 @@ import request from '@/utils/request'
 export const getDirectorysListApi = (params) =>
   request.get('/directorys', { params })
 /**
- *  添加列表
- * **/
-export const AddSubjectApi = (data) => request.post('/subjects', data)
-/**
  *  删除列表
  * **/
-export const delSubjectApi = (id) => request.delete(`/directorys/${id}`)
+export const deldirectorsjectApi = (id) => request.delete(`/directorys/${id}`)
+
 /**
- *  获取学科详情
+ *  修改目录
  * **/
-export const getsubjectDetailApi = (id) => request.get(`/subjects/${id}`)
-/**
- *  修改学科详情
- * **/
-export const editsubjectApi = (data) =>
+export const editdirectorystApi = (data) =>
   request.put(`/subjects/${data.id}`, data)
+/**
+ *  添加目录
+ * **/
+export const addDirectorsApi = (data) => request.post(`/directorys`, data)
+/**
+ *  编辑目录
+ * **/
+export const editDirectorsApi = (data) =>
+  request.put(`/directorys/${data.id}`, data)
+/**
+ *  获取目录详情
+ * **/
+export const getDirectorsDetailApi = (id) => request.get(`/directorys/${id}`)

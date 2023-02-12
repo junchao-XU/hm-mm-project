@@ -21,8 +21,8 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="目录名称" prop="directoryName">
-        <el-input v-model="formData.directoryName" style="width: 80%" />
+      <el-form-item label="目录名称" prop="tagName">
+        <el-input v-model="formData.tagName" style="width: 80%" />
       </el-form-item>
     </el-form>
     <template v-slot:footer>
@@ -40,11 +40,8 @@
 
 <script>
 import { getsubjectSimpleDetailApi } from '@/api/subject'
-import {
-  addDirectorsApi,
-  editDirectorsApi,
-  getDirectorsDetailApi
-} from '@/api/directorys'
+import { editTagsApi, addTagsApi, gettagsDetaliApi } from '@/api/tags'
+
 export default {
   props: {
     showDialog: {
@@ -56,14 +53,12 @@ export default {
     return {
       formData: {
         subjectID: 1, // 所属学科
-        directoryName: '' // 学科名称
+        tagName: '' // 学科名称
       },
       list: [], // 学科列表
       subject: '',
       rules: {
-        directoryName: [
-          { required: true, message: '目录不能为空', trigger: 'blur' }
-        ]
+        tagName: [{ required: true, message: '目录不能为空', trigger: 'blur' }]
       }
     }
   },
@@ -77,7 +72,7 @@ export default {
     closeDialog() {
       this.formData = {
         subjectID: 1, // 所属学科
-        directoryName: '' // 学科名称
+        tagName: '' // 学科名称
       }
       this.$emit('update:showDialog', false)
     },
@@ -87,10 +82,10 @@ export default {
       this.$refs.directoryFrom.validate(async (isok) => {
         if (isok) {
           if (this.formData.id) {
-            await editDirectorsApi(this.formData)
+            await editTagsApi(this.formData)
             this.$message.success('编辑成功')
           } else {
-            await addDirectorsApi(this.formData)
+            await addTagsApi(this.formData)
             this.$message.success('添加成功')
           }
           this.$emit('updateList')
@@ -99,9 +94,9 @@ export default {
       })
     },
     // 回显数据
-    async getDirectorsDetail(id) {
+    async gettagsDetali(id) {
       this.formData.id = ''
-      const data = await getDirectorsDetailApi(id)
+      const data = await gettagsDetaliApi(id)
       for (const key in this.formData) {
         this.formData[key] = data[key]
       }
