@@ -139,8 +139,6 @@ export default {
     },
     // 删除
     deletefn(id) {
-      console.log(id)
-
       this.$confirm('确认删除员工吗', {
         confirmButtonText: '删除',
         cancelButtonText: '取消'
@@ -173,14 +171,14 @@ export default {
 .left {
   margin-right: 15px;
 }
-.app-container{
+.app-container {
   padding: 20px;
-  ::v-deep .el-card__body{
+  ::v-deep .el-card__body {
     padding: 20px;
   }
-  ::v-deep .el-table th{
+  ::v-deep .el-table th {
     background-color: #fafafa;
     border-bottom: 3px solid #e8e8e8;
-}
+  }
 }
 </style>
