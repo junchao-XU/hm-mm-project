@@ -136,8 +136,6 @@ export default {
     },
     // 删除
     deletefn(id) {
-      console.log(id)
-
       this.$confirm('确认删除员工吗', {
         confirmButtonText: '删除',
         cancelButtonText: '取消'
@@ -158,7 +156,6 @@ export default {
 
 <style lang="scss" scoped>
 .box-card {
-  width: 1297px;
   padding: 20px;
 }
 .message {

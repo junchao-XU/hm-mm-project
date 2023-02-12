@@ -76,7 +76,7 @@ export default {
         avatar: '', // 头像
         email: '', // 邮件,
         password: '', // 密码
-        introduce: '' // 介绍
+        introduce: false // 介绍
       },
       rules: {
         username: [
