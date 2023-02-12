@@ -4545,6 +4545,11 @@
   "resolved" "https://registry.npmmirror.com/event-pubsub/-/event-pubsub-4.3.0.tgz"
   "version" "4.3.0"
 
+"eventemitter3@^2.0.3":
+  "integrity" "sha512-jLN68Dx5kyFHaePoXWPsCGW5qdyZQtLYHkxkg02/Mz6g0kYpDx4FyP6XfArhQdlOC4b8Mv+EMxPo/8La7Tzghg=="
+  "resolved" "https://registry.npmmirror.com/eventemitter3/-/eventemitter3-2.0.3.tgz"
+  "version" "2.0.3"
+
 "eventemitter3@^4.0.0":
   "integrity" "sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw=="
   "resolved" "https://registry.npmmirror.com/eventemitter3/-/eventemitter3-4.0.7.tgz"
@@ -4719,7 +4724,7 @@
     "assign-symbols" "^1.0.0"
     "is-extendable" "^1.0.1"
 
-"extend@~3.0.2":
+"extend@^3.0.2", "extend@~3.0.2":
   "integrity" "sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g=="
   "resolved" "https://registry.npmmirror.com/extend/-/extend-3.0.2.tgz"
   "version" "3.0.2"
@@ -4775,6 +4780,11 @@
   "integrity" "sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q=="
   "resolved" "https://registry.npmmirror.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz"
   "version" "3.1.3"
+
+"fast-diff@1.1.2":
+  "integrity" "sha512-KaJUt+M9t1qaIteSvjc6P3RbMdXsNhK61GRftR6SNxqmhthcd9MGIi4T+o0jD8LUSpSnSKXE20nLtJ3fOHxQig=="
+  "resolved" "https://registry.npmmirror.com/fast-diff/-/fast-diff-1.1.2.tgz"
+  "version" "1.1.2"
 
 "fast-glob@^2.2.6":
   "integrity" "sha512-g1KuQwHOZAmOZMuBtHdxDtju+T2RT8jgCC9aANsbpdiDDTSnjgfuVsIBNKbUeJI3oKMRExcfNDtJl4OhbffMsw=="
@@ -8212,6 +8222,11 @@
   dependencies:
     "no-case" "^2.2.0"
 
+"parchment@^1.1.4":
+  "integrity" "sha512-J5FBQt/pM2inLzg4hEWmzQx/8h8D0CiDxaG3vyp9rKrQRSDgBlhjdP5jQGgosEajXPSQouXGHOmVdgo7QmJuOg=="
+  "resolved" "https://registry.npmmirror.com/parchment/-/parchment-1.1.4.tgz"
+  "version" "1.1.4"
+
 "parent-module@^1.0.0":
   "integrity" "sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g=="
   "resolved" "https://registry.npmmirror.com/parent-module/-/parent-module-1.0.1.tgz"
@@ -9074,6 +9089,27 @@
   "integrity" "sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ=="
   "resolved" "https://registry.npmmirror.com/querystringify/-/querystringify-2.2.0.tgz"
   "version" "2.2.0"
+
+"quill-delta@^3.6.2":
+  "integrity" "sha512-wdIGBlcX13tCHOXGMVnnTVFtGRLoP0imqxM696fIPwIf5ODIYUHIvHbZcyvGlZFiFhK5XzDC2lpjbxRhnM05Tg=="
+  "resolved" "https://registry.npmmirror.com/quill-delta/-/quill-delta-3.6.3.tgz"
+  "version" "3.6.3"
+  dependencies:
+    "deep-equal" "^1.0.1"
+    "extend" "^3.0.2"
+    "fast-diff" "1.1.2"
+
+"quill@^1.3.4":
+  "integrity" "sha512-hG/DVzh/TiknWtE6QmWAF/pxoZKYxfe3J/d/+ShUWkDvvkZQVTPeVmUJVu1uE6DDooC4fWTiCLh84ul89oNz5g=="
+  "resolved" "https://registry.npmmirror.com/quill/-/quill-1.3.7.tgz"
+  "version" "1.3.7"
+  dependencies:
+    "clone" "^2.1.1"
+    "deep-equal" "^1.0.1"
+    "eventemitter3" "^2.0.3"
+    "extend" "^3.0.2"
+    "parchment" "^1.1.4"
+    "quill-delta" "^3.6.2"
 
 "randomatic@^3.0.0":
   "integrity" "sha512-TuDE5KxZ0J461RVjrJZCJc+J+zCkTb1MbH9AQUq68sMhOMcy9jLcb3BrZKgp9q9Ncltdg4QVqWrH02W2EFFVYw=="
@@ -11155,6 +11191,14 @@
     "loader-utils" "^1.1.0"
     "vue-hot-reload-api" "^2.3.0"
     "vue-style-loader" "^4.1.0"
+
+"vue-quill-editor@^3.0.6":
+  "integrity" "sha512-g20oSZNWg8Hbu41Kinjd55e235qVWPLfg4NvsLW6d+DhgBTFbEuMpcWlUdrD6qT3+Noim6DRu18VLM9lVShXOQ=="
+  "resolved" "https://registry.npmmirror.com/vue-quill-editor/-/vue-quill-editor-3.0.6.tgz"
+  "version" "3.0.6"
+  dependencies:
+    "object-assign" "^4.1.1"
+    "quill" "^1.3.4"
 
 "vue-router@3.0.6":
   "integrity" "sha512-Ox0ciFLswtSGRTHYhGvx2L44sVbTPNS+uD2kRISuo8B39Y79rOo0Kw0hzupTmiVtftQYCZl87mwldhh2L9Aquw=="

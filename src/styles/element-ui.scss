@@ -21,11 +21,18 @@
   left: 0;
   position: relative;
   margin: 0 auto;
-  .el-dialog__header{
-    background-color:#409Eff !important;
-  
+  color: #606266;
+  font-size: 14px;
+  word-break: break-all;
+  .el-dialog__header {
+    background-color: #409eff !important;
   }
-  .el-dialog__title{  color: #fff !important;}
+  .el-dialog__title {
+    color: #fff !important;
+  }
+  .el-dialog__headerbtn .el-dialog__close {
+    color: #fff;
+  }
   border-radius: 10px;
 }
 

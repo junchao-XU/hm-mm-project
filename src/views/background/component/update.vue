@@ -39,7 +39,7 @@
       </el-form-item>
       <el-form-item label="介绍" label-width="200px">
         <el-input
-          v-model="formData.introduce"
+          v-model="formData.introduction"
           type="textarea"
           style="width: 50%"
         />
@@ -76,7 +76,7 @@ export default {
         avatar: '', // 头像
         email: '', // 邮件,
         password: '', // 密码
-        introduce: '' // 介绍
+        introduction: '' // 介绍
       },
       rules: {
         username: [
@@ -136,8 +136,6 @@ export default {
       for (const key in this.formData) {
         this.formData[key] = data[key]
       }
-      console.log(this.formData)
-      console.log(data)
     }
   }
 }

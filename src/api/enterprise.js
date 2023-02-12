@@ -15,3 +15,4 @@ export const getCompanysInfoApi = (id) => request.get(`/companys/${id}`)
 export const deleteCompanysApi = (id) => request.delete(`/companys/${id}`)
 // 企业管理状态设置
 export const CompanysStateApi = (id, state) => request.post(`/companys/${id}/${state}`)
+

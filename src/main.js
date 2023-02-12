@@ -22,6 +22,13 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+// 全局挂载 VueQuillEditor
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+Vue.use(VueQuillEditor)
+
 // 注册全局过滤器
 import * as filters from '@/filters'
 Object.keys(filters).forEach(item => Vue.filter(item, filters[item]))
