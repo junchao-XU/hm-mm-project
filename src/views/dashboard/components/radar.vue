@@ -35,6 +35,7 @@ export default {
 
       radar: {
         // shape: 'circle',
+        radius: 40, // 图大小
         name: {
           textStyle: {
             color: '#fff',
@@ -69,7 +70,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .radar-echart {
   position: relative;
   width: 250px;
