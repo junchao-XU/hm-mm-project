@@ -1,5 +1,5 @@
 <template>
-  <!-- 雷达图  图表必须给高和宽度-->
+  <!-- 饼图  图表必须给高和宽度-->
   <div ref="myDiv" class="radar-echart" />
 </template>
 
@@ -30,10 +30,10 @@ export default {
       toolbox: {
         show: true,
         feature: {
-          mark: { show: true },
-          dataView: { show: true, readOnly: false },
-          restore: { show: true },
-          saveAsImage: { show: true }
+          mark: { show: true }
+          // dataView: { show: true, readOnly: false },
+          // restore: { show: true }
+          // saveAsImage: { show: true }
         }
       },
       series: [
@@ -41,20 +41,17 @@ export default {
           name: 'Nightingale Chart',
           type: 'pie',
           // radius: [50, 250],
-          // center: ['50%', '50%'],
+          center: ['50%', '50%'], // 图片位置位置
           roseType: 'area',
           itemStyle: {
-            borderRadius: 8
+            borderRadius: 0 // 改变形状0是方形
           },
           data: [
-            { value: 40, name: 'rose 1' },
-            { value: 38, name: 'rose 2' },
-            { value: 32, name: 'rose 3' },
-            { value: 30, name: 'rose 4' },
-            { value: 28, name: 'rose 5' },
-            { value: 26, name: 'rose 6' },
-            { value: 22, name: 'rose 7' },
-            { value: 18, name: 'rose 8' }
+            { value: 40, name: '前端' },
+            { value: 28, name: 'java' },
+            { value: 26, name: 'python' },
+            { value: 22, name: 'c++' },
+            { value: 18, name: 'UI' }
           ]
         }
       ]
@@ -63,7 +60,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .radar-echart {
   position: relative;
   width: 250px;
