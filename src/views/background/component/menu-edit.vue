@@ -79,7 +79,6 @@ export default {
         title: '' // 菜单标题
       },
       treeData: [], // 权限组名称，来接受树形结构
-      // value: false, // 禁用
       // 规则数组
       rules: {
         code: [
@@ -102,10 +101,6 @@ export default {
   },
 
   methods: {
-    foo(row) {
-      console.log(row)
-      return row
-    },
     value() {
       if (this.formData.id) {
         return true
@@ -116,12 +111,8 @@ export default {
     // 取消
     closeDialog() {
       this.$emit('update:showMenuDialog', false)
-      this.formData = {
-        code: '', // 菜单代码
-        pid: 0, // 父 id
-        is_point: true, // 	是否权限点
-        title: '' // 菜单标题
-      }
+      this.formData = { }
+      this.$refs.permFrom.resetFields()
     },
     // 确定
     async btnOk() {
@@ -144,7 +135,6 @@ export default {
     // 点击树形组件子节点
     nodeClick(data) {
       // if (data.children && data.children.length > 0) return
-      this.titles = data.title
       this.formData.pid = data.id
       this.$refs.deptSelect.blur() // 失去焦点
     },
@@ -162,12 +152,9 @@ export default {
     },
     // 回显数据
     async getMenuDetail(id) {
-      this.formData.id = ''
       const data = await getMenuDetailApi(id)
-      for (const key in this.formData) {
-        this.formData[key] = data[key]
-      }
-      console.log(this.formData)
+      this.formData = data
+      // this.formData.pid = data.title
     }
   }
 }

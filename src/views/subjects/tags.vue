@@ -1,4 +1,4 @@
-<mplate>
+<template>
   <div class="app-container">
     <el-card class="box-card">
       <el-row type="flex" style="margin-bottom: 10px">

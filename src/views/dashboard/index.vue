@@ -18,8 +18,7 @@
                   placement="top"
                   class="el-tooltip el-icon-warning item"
                 >
-                  <i
-                /></el-tooltip>
+                  <i /></el-tooltip>
               </div>
               <div class="total">260,560</div>
               <div class="trends">
@@ -55,8 +54,7 @@
                   placement="top"
                   class="el-tooltip el-icon-warning item"
                 >
-                  <i
-                /></el-tooltip>
+                  <i /></el-tooltip>
               </div>
               <div class="chart">
                 <!-- 雷达图 -->
@@ -85,8 +83,7 @@
                   placement="top"
                   class="el-tooltip el-icon-warning item"
                 >
-                  <i
-                /></el-tooltip>
+                  <i /></el-tooltip>
               </div>
               <div class="chart">
                 <!-- 雷达图-饼图 -->
@@ -115,8 +112,7 @@
                   placement="top"
                   class="el-tooltip el-icon-warning item"
                 >
-                  <i
-                /></el-tooltip>
+                  <i /></el-tooltip>
               </div>
               <div class="chart">
                 <!-- 雷达图-柱状 -->
@@ -132,7 +128,7 @@
         </el-col>
       </el-row>
     </div>
-    <br />
+    <br>
     <el-card class="box-card" style="position: relative">
       <div
         style="
@@ -149,13 +145,10 @@
           <div class="grid-content bg-purple">
             <el-tabs v-model="activeName" @tab-click="handleClick">
               <!-- 前端数据图 -->
-              <el-tab-pane label="前端学科" name="first">
-                <discipline />
-              </el-tab-pane>
+              <el-tab-pane label="前端学科" name="first" />
               <!-- java数据图 -->
-              <el-tab-pane label="JAVA学科" name="second">
-                <tow-discipline />
-              </el-tab-pane>
+              <el-tab-pane label="JAVA学科" name="second" />
+              <discipline ref="barCharts" />
             </el-tabs>
           </div>
         </el-col>
@@ -245,10 +238,9 @@ import radar from './components/radar.vue'
 import piechart from './components/piechart.vue'
 import columnar from './components/columnar.vue'
 import discipline from './components/discipline.vue'
-import towDiscipline from './components/tow-discipline.vue'
 export default {
   name: 'Dashboard',
-  components: { radar, piechart, columnar, discipline, towDiscipline },
+  components: { radar, piechart, columnar, discipline },
   computed: {
     ...mapGetters(['name'])
   },
@@ -259,7 +251,53 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event)
+      const option = this.$refs.barCharts.option
+      if (tab.index === '0') {
+        option.yAxis = {
+          show: true,
+          type: 'value',
+          max: 180,
+          min: 0,
+          minInterval: 6,
+          interval: 30, // 每次增加几个
+          // 修改xy轴颜色
+          axisLabel: {
+            textStyle: {
+              color: 'blue'
+            }
+          }
+        }
+        option.series = [
+          {
+            data: [100, 120, 161, 134, 105, 160, 165, 100, 120, 161, 134, 105],
+            type: 'line',
+            smooth: true
+          }
+        ]
+      } else {
+        option.yAxis = {
+          type: 'value',
+          max: 200,
+          min: 0,
+          minInterval: 6,
+          interval: 50, // 每次增加几个
+          // 修改xy轴颜色
+          axisLabel: {
+            textStyle: {
+              color: 'blue'
+            }
+          }
+        }
+        option.series = [
+          {
+            data: [200, 192, 120, 144, 160, 130, 140, 105, 160, 165, 100, 120],
+            type: 'line',
+            smooth: true
+          }
+        ]
+      }
+
+      this.$refs.barCharts.charts.setOption(option)
     }
   }
 }

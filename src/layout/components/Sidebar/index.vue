@@ -3,7 +3,6 @@
     <logo v-if="showLogo" class="logo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
-
         :default-active="activeMenu"
         :collapse="isCollapse"
         :background-color="variables.menuBg"
@@ -39,6 +38,7 @@ export default {
       const { meta, path } = route
       // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
+        console.log(meta.activeMenu)
         return meta.activeMenu
       }
       return path
@@ -61,6 +61,7 @@ export default {
   display: block;
   background-color: #1495fa;
   height: 70px;
+  box-shadow: 0 -46px 6px -48px #000 inset;
 }
 
 </style>

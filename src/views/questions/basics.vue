@@ -212,6 +212,7 @@ export default {
   components: { PreviewItem },
   data() {
     return {
+      flag: false,
       showDialog: false, // 预览窗口
       QUESTIONS, // 可枚举文件
       page: {
@@ -253,6 +254,14 @@ export default {
       async handler(newVal) {
         this.getCityList(newVal)
       }
+    },
+    formData: {
+      deep: true,
+      handler(newVal) {
+        if (Object.values(newVal).join('') === '') {
+          this.formData = {}
+        }
+      }
     }
   },
   created() {
@@ -285,10 +294,15 @@ export default {
       this.DisciplineList = res
     },
     // 获取基础题库列表
-    async getBasicsList(formData) {
-      const { items, counts } = await getBasicsListApi({ ...this.page, ...formData })
-      this.BasicsList = items
-      this.counts = counts
+    async getBasicsList() {
+      let data = {}
+      if (this.flag) {
+        data = await getBasicsListApi({ ...this.page, ...this.formData })
+      } else {
+        data = await getBasicsListApi({ ...this.page })
+      }
+      this.BasicsList = data.items
+      this.counts = data.counts
     },
     // 遍历难易程度
     Deff(row) {
@@ -308,12 +322,12 @@ export default {
      */
     // 搜索
     search() {
-      if (Object.values(this.formData).join('') !== '') {
-        this.getBasicsList(this.formData)
-      }
+      this.flag = true
+      this.getBasicsList()
     },
     // 清除
     clear() {
+      this.flag = false
       this.formData = {}
       this.getBasicsList()
     },

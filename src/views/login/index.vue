@@ -27,7 +27,7 @@
         </el-form-item>
 
         <!-- 登录按钮 -->
-        <el-button type="primary" style="width:100%; height: 50px;font-size: 22px;; margin-bottom:30px;" @click="login">登录</el-button>
+        <el-button :loading="loginLodin" type="primary" style="width:100%; height: 50px;font-size: 22px;; margin-bottom:30px;" @click="login">登录</el-button>
       </el-form>
     </div>
   </div>
@@ -40,6 +40,7 @@ import { loginApi } from '@/api/user'
 export default {
   data() {
     return {
+      loginLodin: false,
       loginForm: {
         username: 'root@admin.com',
         password: '123456'
@@ -71,11 +72,14 @@ export default {
     login() {
       this.$refs.LoginForm.validate(isOk => {
         if (!isOk) return false
+        this.loginLodin = true
         shajs.update(this.loginForm.password)
         const password = shajs.getHash('HEX')
         loginApi({ username: this.loginForm.username, password }).then(({ token }) => {
           this.$store.commit('user/SET_TOKEN', token)
           this.$router.push('/')
+        }).finally(() => {
+          this.loginLodin = false
         })
       })
     }

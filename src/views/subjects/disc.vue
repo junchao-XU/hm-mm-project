@@ -110,8 +110,8 @@ export default {
       this.page.page = Page
     },
     // 获取学科列表
-    async getSubjectList(subjectName) {
-      const data = await getSubjectListApi({ ...this.page, subjectName })
+    async getSubjectList() {
+      const data = await getSubjectListApi({ ...this.page, subjectName: this.subjectName })
       this.list = data.items
       this.counts = data.counts
     },
@@ -156,11 +156,12 @@ export default {
     // 搜索
     search() {
       this.flag = true
-      this.getSubjectList(this.subjectName)
+      this.getSubjectList()
     },
     // 清除
     clear() {
       this.flag = false
+      this.subjectName = ''
       this.getSubjectList()
     }
   }

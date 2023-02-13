@@ -18,7 +18,7 @@
               首页
             </el-dropdown-item>
           </router-link>
-          <el-dropdown-item>
+          <el-dropdown-item @click.native="logout">
             退出登录
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -48,9 +48,9 @@ export default {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    logout() {
+      this.$store.dispatch('user/Login_Out')
+      this.$router.push('/login')
     }
   }
 }

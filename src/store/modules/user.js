@@ -17,7 +17,8 @@ const mutations = {
     state.token = token
   },
   // 清除token
-  REMOVE_TOKEN() {
+  REMOVE_TOKEN(state) {
+    state.token = ''
     removeToken()
   },
   // 设置个人信息
@@ -38,7 +39,7 @@ const actions = {
   },
   // 退出登录
   Login_Out({ commit }) {
-    commit('SET_USER_INFO')
+    commit('REMOVE_TOKEN')
     commit('REMOVE_USER_INFO')
   }
 }

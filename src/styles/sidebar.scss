@@ -88,8 +88,8 @@
     }
     .el-menu-item.is-active {
       color: #fff !important;
-      background: -webkit-gradient(linear, left top, right top, from(#1493fa), to(#01c6fa));
-      background: linear-gradient(90deg, #1493fa, #01c6fa);
+      background: $menuBg;
+      // background: linear-gradient(90deg, #1493fa, #01c6fa);
     }
 
     & .nest-menu .el-submenu > .el-submenu__title,

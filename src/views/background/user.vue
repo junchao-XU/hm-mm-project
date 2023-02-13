@@ -62,22 +62,6 @@
       </el-table>
 
       <!-- 分页组件 -->
-      <!-- <el-row
-        type="flex"
-        justify="end"
-        align="center"
-        style="height: 60px"
-        class="rowspag"
-      >
-        <el-pagination
-          :current-page="page.pagesize"
-          :total="counts"
-          :page-size="page.pagesize"
-          :page-sizes="[10, 20, 30, 50]"
-          layout="prev,pager,next,sizes,jumper"
-          @current-change="changePage"
-        />
-      </el-row> -->
       <Pagination style="margin-top: 20px;" :total="counts" :page-size="page.pagesize" :page-no="page.page" @getPageNo="changePage" />
 
       <!-- 弹窗 -->
@@ -105,7 +89,6 @@ export default {
         pagesize: 10 // 每页条数
         // keyword: ''
       },
-      pages: 1, // 总页数
       counts: 1, // 总数
       list: [],
       input: '',
@@ -122,9 +105,6 @@ export default {
       const data = await getUserListApi(this.page)
       this.counts = data.counts
       this.list = data.list
-      this.page.page = data.page
-      this.pages = data.pages
-      this.pagesize = data.pagesize
       this.loading = false
     },
     // 页码

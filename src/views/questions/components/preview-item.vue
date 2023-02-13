@@ -121,7 +121,7 @@ export default {
     },
     // 题型
     tixing() {
-      return QUESTIONS.questionType.find(i => i.id === Number(this.formDate.questionType))?.value
+      return QUESTIONS.questionType.find(i => i.id === this.formDate.questionType)?.value
     }
   }
 }

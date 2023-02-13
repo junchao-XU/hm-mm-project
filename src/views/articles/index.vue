@@ -49,7 +49,7 @@
           />
           <el-table-column prop="title" label="文章标题" width="400">
             <template v-slot="{row}">
-              {{ row.title }} <i v-if="row.videoURL" href="javascript" style="color: blue;" class="el-icon-film" @click="voidShow = true" />
+              {{ row.title }} <i v-if="row.videoURL" style="color: blue;" class="el-icon-film" @click="voidFn(row)" />
             </template>
           </el-table-column>
           <el-table-column prop="visits" label="阅读数" />
@@ -104,13 +104,16 @@
         />
 
         <!-- 视频弹窗 -->
-        <el-dialog :visible="voidShow" custom-class="elDialog" @close="voidShow = false">
+        <el-dialog :visible="voidShow" custom-class="elDialog" @open="open" @close="close">
           <video
-            src="https://jackson-1258977884.cos.ap-beijing.myqcloud.com/video.mp4"
-            controls
+            ref="Media"
+            style="border-radius: 8px;"
+            width="100%"
+            src="https://xujunchao-gege-1314635453.cos.ap-nanjing.myqcloud.com/xujunchaogege"
             loop
             autoplay
             muted
+            controls
           />
         </el-dialog>
       </el-card>
@@ -140,9 +143,10 @@ export default {
   },
   data() {
     return {
+      voidUrl: '',
       formInline: {
-        keyword: '', // 关键字
-        state: '' // 开启关闭
+        // keyword: '', // 关键字
+        // state: '' // 开启关闭
       },
       searchVal: '', // 搜索栏
       tableData: [], // 表格数据
@@ -175,11 +179,11 @@ export default {
       return index + 1 + (this.page - 1) * this.pageSize
     },
     // 数据渲染
-    async biaodan(formInline) {
+    async biaodan() {
       const { items, counts } = await ArticleListApi({
         page: this.page,
         pageSize: this.pageSize,
-        ...formInline
+        ...this.formInline
       })
       this.tableData = items
       this.total = counts
@@ -254,16 +258,31 @@ export default {
     // 搜索
     search() {
       this.flag = true
-      this.biaodan(this.formInline)
+      this.biaodan()
     },
     // 清除
     clear() {
       this.formInline = {}
       this.flag = false
       this.biaodan()
+    },
+    // 视频弹窗
+    voidFn(row) {
+      // this.voidUrl = row.videoURL
+      this.voidShow = true
+    },
+    // 关闭弹窗
+    close() {
+      const Media = this.$refs.Media
+      this.voidShow = false
+      Media.pause()
+    },
+    // 弹窗打开
+    open() {
+      const Media = this.$refs.Media
+      Media.play()
     }
   }
-  // 搜索框
 }
 </script>
 
@@ -287,15 +306,11 @@ export default {
 padding: 0;
 }
 ::v-deep .elDialog {
-padding: 50px 5px 5px 8px;
+padding: 8px 8px 5px 8px;
 background-color: rgba(0, 0, 0, 0.5);
 }
 ::v-deep .el-dialog__headerbtn .el-dialog__close {
- width: 40px;
- height: 40px;
- border-radius: 20px;
- background: rgba(0, 0, 0, 0.3);
- margin-top: -10px;
+color:transparent;
 }
 ::v-deep .elDialog .el-dialog__body {
  padding: 0;

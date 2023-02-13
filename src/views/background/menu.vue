@@ -16,7 +16,12 @@
       </PageTools>
 
       <!-- row-key 渲染树形数据必须设置 -->
-      <el-table :data="list" row-key="id">
+      <el-table
+        default-expand-all
+        :data="list"
+        row-key="id"
+        :tree-props="{children: 'children'}"
+      >
         <el-table-column label="标题" prop="title" width="200px">
           <template v-slot="{ row }">
             <i :class="{ 'el-icon-view': !row.children }" />{{ row.title }}
@@ -50,7 +55,6 @@
 
 <script>
 import { getMenuListApi, DelMenuListApi } from '@/api/menu'
-import { tranListToTreeData } from '@/utils/index' // 递归
 import MenuEdit from './component/menu-edit.vue'
 export default {
   components: { MenuEdit },
@@ -80,16 +84,21 @@ export default {
         this.$message.success('删除用户成功')
       })
     },
-
-    async getMenuList() {
-      const data = tranListToTreeData(await getMenuListApi(), null)
-      data.forEach((item) => {
-        item.children = item.childs
-        item.childs?.forEach((obj) => {
-          obj.children = obj.points
-        })
+    digui(list) {
+      const arr = list.map(obj => {
+        for (const key in obj) {
+          if (Array.isArray(obj[key])) {
+            this.digui(obj[key])
+            obj.children = obj[key]
+          }
+        }
+        return obj
       })
-      this.list = data
+      return arr
+    },
+    async getMenuList() {
+      const data = await getMenuListApi()
+      this.list = this.digui(data)
     }
   }
 }
