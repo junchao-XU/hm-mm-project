@@ -357,7 +357,12 @@ export default {
     // 编辑修改
     async edit(row) {
       // const res = await editBasicsApi(row.id)
-      this.$router.push(`/questions/new?id=${row.id}`)
+      this.$router.push({
+        path: '/questions/new',
+        query: {
+          id: row.id
+        }
+      })
     }
   }
 }

@@ -410,7 +410,12 @@ export default {
     },
     // 编辑修改
     edit(row) {
-      this.$router.push(`/questions/new?id=${row.id}`)
+      this.$router.push({
+        path: '/questions/new',
+        query: {
+          id: row.id
+        }
+      })
     },
     // 删除
     remove(row) {

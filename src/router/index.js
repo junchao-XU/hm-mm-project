@@ -95,7 +95,7 @@ export const constantRoutes = [
         meta: { title: '精选题库', icon: 'el-icon-menu' }
       },
       {
-        path: 'new/:id?',
+        path: 'new',
         name: 'new',
         component: () => import('@/views/questions/input.vue'),
         meta: { title: '试题录入', icon: 'el-icon-menu' }
