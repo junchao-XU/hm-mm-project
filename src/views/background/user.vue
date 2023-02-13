@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card">
+    <el-card v-loading="loading" class="box-card">
       <PageTools>
         <template #left>
           <el-input
@@ -29,7 +29,7 @@
         </template>
       </Message>
       <!-- 表格 -->
-      <el-table v-loading="loading" :data="list" style="width: 100%">
+      <el-table :data="list" style="width: 100%">
         <el-table-column
           label="序号"
           width="180"
@@ -93,7 +93,7 @@ export default {
       list: [],
       input: '',
       showDialog: false, // 新增弹层
-      loading: true // 加载状态
+      loading: false // 加载状态
     }
   },
   created() {
@@ -102,6 +102,7 @@ export default {
   methods: {
     // 用户列表
     async getUserList() {
+      this.loading = true
       const data = await getUserListApi(this.page)
       this.counts = data.counts
       this.list = data.list

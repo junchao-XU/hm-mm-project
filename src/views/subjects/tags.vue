@@ -1,6 +1,8 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card">
+    <el-card v-loading="loading" class="box-card">
+
+      <!-- 顶部表单 -->
       <el-row type="flex" style="margin-bottom: 10px">
         <el-col>
           <span class="text">标签名称</span>
@@ -39,11 +41,13 @@
         </el-col>
       </el-row>
 
+      <!-- 提示信息 -->
       <Message>
         <template #message>
           <span class="message">共{{ counts }}条记录</span>
         </template>
       </Message>
+
       <!-- 表格 -->
       <el-table :data="list" style="width: 100%">
         <el-table-column prop="id" label="序号" />
@@ -60,7 +64,6 @@
             {{ row.state === 1 ?'已启用':'已禁用' }}
           </template>
         </el-table-column>
-
         <el-table-column label="操作" width="240">
           <template #default="{ row }">
             <el-button v-if="row.state === 1" type="text" @click="Banfn(row.id,0)">禁用</el-button>
@@ -70,6 +73,7 @@
           </template>
         </el-table-column>
       </el-table>
+
       <!-- 分页组件 -->
       <Pagination
         style="margin-top: 20px;"
@@ -78,6 +82,8 @@
         :total="counts"
         @getPageNo="getPageNo"
       />
+
+      <!-- 弹窗 -->
       <EditTage
         ref="EditTage"
         :show-dialog.sync="showDialog"
@@ -94,6 +100,7 @@ export default {
   components: { EditTage },
   data() {
     return {
+      loading: false,
       flag: false,
       subjectID: this.$route.query.id,
       distObj: {
@@ -123,6 +130,7 @@ export default {
     this.gettagsList()
   },
   methods: {
+    // 获取当前页
     getPageNo(Page) {
       if (this.flag) {
         this.gettagsList(this.tagName)
@@ -136,9 +144,9 @@ export default {
       this.showDialog = true
       this.$refs.EditTage.getDirectorSimple()
     },
-
     // 获取目录列表
     async gettagsList() {
+      this.loading = true
       let data = {}
       if (this.$route.query.id !== undefined) {
         data = await gettagsListApi({ ...this.page, ...this.distObj, subjectID: this.subjectID })
@@ -147,8 +155,8 @@ export default {
       }
       this.list = data.items
       this.counts = data.counts
+      this.loading = false
     },
-
     // 禁用
     async Banfn(id, state) {
       await editTagsStateApi(id, state)

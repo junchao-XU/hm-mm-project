@@ -91,7 +91,7 @@
       </el-table>
 
       <!-- 分页组件 -->
-      <!-- <Pagination style="margin-top: 20px;" :page-no="page.page" :page-size="page.pageSize" :total="total" @getPageNo="getPageNo" /> -->
+      <Pagination style="margin-top: 20px;" :page-no="page.page" :page-size="page.pageSize" :total="total" @getPageNo="getPageNo" />
     </el-card>
   </div>
 </template>

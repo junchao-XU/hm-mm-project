@@ -1,6 +1,8 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card">
+    <el-card v-loding="loading" class="box-card">
+
+      <!-- 顶部表单 -->
       <PageTools>
         <template #left>
           <el-input
@@ -27,11 +29,14 @@
           </el-button>
         </template>
       </PageTools>
+
+      <!-- 提示条 -->
       <Message>
         <template #message>
           <span class="message">共{{ counts }}条记录</span>
         </template>
       </Message>
+
       <!-- 表格 -->
       <el-table :data="list" style="width: 100%">
         <el-table-column prop="id" label="序号" />
@@ -61,6 +66,7 @@
           </template>
         </el-table-column>
       </el-table>
+
       <!-- 分页组件 -->
       <Pagination
         style="margin-top: 20px;"
@@ -69,6 +75,8 @@
         :total="counts"
         @getPageNo="getPageNo"
       />
+
+      <!-- 新增弹窗 -->
       <SubjectUpdate
         ref="SubjectUpdate"
         :show-dialog.sync="showDialog"
@@ -86,6 +94,7 @@ export default {
   components: { SubjectUpdate },
   data() {
     return {
+      loading: false,
       flag: false,
       subjectName: '',
       counts: 2, // 总记录数
@@ -111,9 +120,11 @@ export default {
     },
     // 获取学科列表
     async getSubjectList() {
+      this.loading = true
       const data = await getSubjectListApi({ ...this.page, subjectName: this.subjectName })
       this.list = data.items
       this.counts = data.counts
+      this.loading = false
     },
     // 学科分类
     classifyfn(row) {

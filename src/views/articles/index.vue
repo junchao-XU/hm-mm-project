@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="app-container">
-      <el-card class="box-card">
+      <el-card v-loading="loading" class="box-card">
+
         <div class="el-col el-col-18">
           <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="关键字">
@@ -143,6 +144,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       voidUrl: '',
       formInline: {
         // keyword: '', // 关键字
@@ -180,6 +182,7 @@ export default {
     },
     // 数据渲染
     async biaodan() {
+      this.loading = true
       const { items, counts } = await ArticleListApi({
         page: this.page,
         pageSize: this.pageSize,
@@ -187,6 +190,7 @@ export default {
       })
       this.tableData = items
       this.total = counts
+      this.loading = false
     },
     // 新增技巧 开启弹层
     Newskill() {

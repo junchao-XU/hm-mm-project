@@ -1,5 +1,6 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { getUserInfoApi } from '@/api/user'
+import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
@@ -39,6 +40,7 @@ const actions = {
   },
   // 退出登录
   Login_Out({ commit }) {
+    resetRouter()
     commit('REMOVE_TOKEN')
     commit('REMOVE_USER_INFO')
   }

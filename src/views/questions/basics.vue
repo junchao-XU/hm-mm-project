@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card">
+    <el-card v-loading="loading" class="box-card">
 
       <!-- 顶部 -->
       <el-row type="flex" style="margin-bottom: 10px;" justify="space-between">
@@ -212,6 +212,7 @@ export default {
   components: { PreviewItem },
   data() {
     return {
+      loading: false,
       flag: false,
       showDialog: false, // 预览窗口
       QUESTIONS, // 可枚举文件
@@ -265,10 +266,10 @@ export default {
     }
   },
   created() {
-    this.getBasicsList()
     this.getDiscipline()
     this.getUsersList()
     this.getProvinceList()
+    this.getBasicsList()
   },
   methods: {
     // 获取城市列表
@@ -295,6 +296,7 @@ export default {
     },
     // 获取基础题库列表
     async getBasicsList() {
+      this.loading = true
       let data = {}
       if (this.flag) {
         data = await getBasicsListApi({ ...this.page, ...this.formData })
@@ -303,6 +305,7 @@ export default {
       }
       this.BasicsList = data.items
       this.counts = data.counts
+      this.loading = false
     },
     // 遍历难易程度
     Deff(row) {
@@ -356,7 +359,6 @@ export default {
     },
     // 编辑修改
     async edit(row) {
-      // const res = await editBasicsApi(row.id)
       this.$router.push({
         path: '/questions/new',
         query: {

@@ -66,7 +66,7 @@ export const constantRoutes = [
   },
   {
     path: '/companys',
-    name: 'companys',
+    // name: 'companys',
     component: Layout,
     children: [
       {
@@ -110,7 +110,7 @@ export const constantRoutes = [
   },
   {
     path: '/subjects',
-    name: 'subjects',
+    // name: 'subjects',
     component: Layout,
     meta: { title: '学科管理', icon: 'el-icon-s-claim' },
     children: [
@@ -136,7 +136,7 @@ export const constantRoutes = [
   },
   {
     path: '/articles',
-    name: 'articles',
+    // name: 'articles',
     component: Layout,
     children: [
       {
@@ -160,7 +160,6 @@ const createRouter = () =>
 
 const router = createRouter()
 
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router

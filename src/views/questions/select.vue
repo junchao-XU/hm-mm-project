@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card">
+    <el-card v-loading="Loading" class="box-card">
 
       <!-- 顶部 -->
       <el-row type="flex" style="margin-bottom: 10px;" justify="space-between">
@@ -261,6 +261,7 @@ export default {
   components: { PreviewItem, AuditItem },
   data() {
     return {
+      Loading: false,
       AudShowDialog: false, // 审核弹窗
       PreShowDialog: false, // 预览弹窗
       chkState: '3',
@@ -339,9 +340,11 @@ export default {
     },
     // 获取精选题库列表
     async getSelectList(formData) {
+      this.Loading = true
       const { counts, items } = await getSelectListApi({ ...this.page, ...formData })
       this.counts = counts
       this.SelectList = items
+      this.Loading = false
     },
     /**
      * @表格筛选

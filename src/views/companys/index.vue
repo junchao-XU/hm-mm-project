@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card">
+    <el-card v-loading="loading" class="box-card">
 
       <!-- 表单 -->
       <el-form ref="Form" :model="enterpriseData">
@@ -150,6 +150,7 @@ export default {
   components: { AddItem },
   data() {
     return {
+      loading: false,
       showDialog: false, // 弹窗
       provinceList: [], // 省份列表
       cityList: [], // 城市列表
@@ -194,10 +195,11 @@ export default {
     },
     // 获取企业管理列表
     async getCompanysList(enterpriseData) {
+      this.loading = true
       const { counts, items } = await getCompanysListApi({ ...this.page, ...enterpriseData })
-      // counts items
       this.CompanysList = items
       this.counts = counts
+      this.loading = false
     },
     // 获得当前的页数
     getPageNo(page) {

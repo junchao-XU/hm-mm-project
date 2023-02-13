@@ -1,7 +1,7 @@
 <!-- eslint-disable space-before-function-paren -->
 <template>
   <div class="app-container">
-    <el-card class="box-card">
+    <el-card v-loading="loading" class="box-card">
       <PageTools style="margin-bottom: 20px">
         <template #right>
           <el-button
@@ -60,6 +60,7 @@ export default {
   components: { MenuEdit },
   data() {
     return {
+      loading: false,
       list: [], // 菜单列表
       showMenuDialog: false
     }
@@ -96,9 +97,12 @@ export default {
       })
       return arr
     },
+    // 获取菜单详情
     async getMenuList() {
+      this.loading = true
       const data = await getMenuListApi()
       this.list = this.digui(data)
+      this.loading = false
     }
   }
 }
