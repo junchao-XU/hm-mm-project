@@ -1,6 +1,6 @@
 <template>
   <Dialog
-    title="新增文章"
+    :title="form.id ? '编辑文章':'添加文章'"
     :show-dialog.sync="showDialog"
     @close="close"
     @click-ok="submitRole()"
@@ -9,13 +9,8 @@
       <el-form-item label="文章标题" prop="title">
         <el-input v-model="form.title" placeholder="请输入文章标题" />
       </el-form-item>
-      <el-form-item label="文章内容" prop="articleBody">
-        <el-input
-          v-model="form.articleBody"
-          type="textarea"
-          :rows="10"
-          placeholder="请输入内容"
-        />
+      <el-form-item style="height: 240px;" label="文章内容" prop="articleBody">
+        <quill-editor v-model="form.articleBody" style="height: 180px;" :options="editorOption" />
       </el-form-item>
       <el-form-item label="视频地址" prop="videoURL">
         <el-input v-model="form.videoURL" placeholder="请输入视频地址" />
@@ -47,22 +42,21 @@ export default {
         state: false // 状态
       },
       rules: {
-        title: [
-          {
-            required: true,
-            message: '文章标题不能为空',
-            trigger: ['blur', 'change']
-          }
-        ],
-        articleBody: [
-          {
-            required: true,
-            message: '文章内容不能为空',
-            trigger: ['blur', 'change']
-          }
-        ]
+        title: [],
+        articleBody: []
       },
-      textarea: ''
+      textarea: '',
+      editorOption: {
+        placeholder: '',
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], // 加粗，斜体，下划线，删除线
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }], // 列表
+            ['blockquote'], // 引用，代码块
+            ['code-block', 'image', 'video'] // 上传图片、上传视频
+          ]
+        }
+      }
     }
   },
   created() {},
@@ -82,13 +76,8 @@ export default {
         state: false // 状态
       }
     },
-    // 发起请求添加文章
-    // async submitRole() {
-    //   this.$refs.roleForm = await ArticleEditorApi(this.form)
-    // }
     submitRole() {
-      // eslint-disable-next-line space-before-function-paren
-      this.$refs.roleForm.validate(async (flag) => {
+      this.$refs.roleForm.validate(async(flag) => {
         if (!flag) return
 
         if (this.form.id) {

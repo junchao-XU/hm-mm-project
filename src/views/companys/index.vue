@@ -49,7 +49,7 @@
           </el-col>
           <el-col :span="6">
             <div style="padding-left: 40px;">
-              <el-button size="medium" @click="enterpriseData = {}">清除</el-button>
+              <el-button size="medium" @click="clear">清除</el-button>
               <el-button size="medium" type="primary" @click="getCompanysList(enterpriseData)">搜索</el-button>
             </div>
           </el-col>
@@ -235,6 +235,11 @@ export default {
     stateSet(state) {
       if (state === 1) return '确认启用吗?'
       else return '确认禁用吗?'
+    },
+    // 清除
+    clear() {
+      this.enterpriseData = {}
+      this.getCompanysList()
     }
   }
 }

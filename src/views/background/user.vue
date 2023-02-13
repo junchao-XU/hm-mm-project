@@ -60,8 +60,9 @@
           </template>
         </el-table-column>
       </el-table>
+
       <!-- 分页组件 -->
-      <el-row
+      <!-- <el-row
         type="flex"
         justify="end"
         align="center"
@@ -76,12 +77,16 @@
           layout="prev,pager,next,sizes,jumper"
           @current-change="changePage"
         />
-      </el-row>
+      </el-row> -->
+      <Pagination style="margin-top: 20px;" :total="counts" :page-size="page.pagesize" :page-no="page.page" @getPageNo="changePage" />
+
+      <!-- 弹窗 -->
       <Update
         ref="updataDialog"
         :show-dialog.sync="showDialog"
         @update="getUserList()"
       />
+
     </el-card>
   </div>
 </template>
@@ -139,8 +144,6 @@ export default {
     },
     // 删除
     deletefn(id) {
-      console.log(id)
-
       this.$confirm('确认删除员工吗', {
         confirmButtonText: '删除',
         cancelButtonText: '取消'
@@ -173,14 +176,14 @@ export default {
 .left {
   margin-right: 15px;
 }
-.app-container{
+.app-container {
   padding: 20px;
-  ::v-deep .el-card__body{
+  ::v-deep .el-card__body {
     padding: 20px;
   }
-  ::v-deep .el-table th{
+  ::v-deep .el-table th {
     background-color: #fafafa;
     border-bottom: 3px solid #e8e8e8;
-}
+  }
 }
 </style>

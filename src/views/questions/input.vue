@@ -30,7 +30,7 @@
           </el-col>
           <el-col :span="11">
             <el-select v-model="formDate.city" style="width: 190px;">
-            <!-- <el-option></el-option> -->
+              <el-option v-for="item in CityList" :key="item" :value="item" :label="item" />
             </el-select>
           </el-col>
         </el-form-item>
@@ -102,7 +102,17 @@ export default {
     return {
       id: this.$route.query.id,
       QUESTIONS, // 可枚举文件
-      editorOption: {},
+      editorOption: {
+        placeholder: '',
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], // 加粗，斜体，下划线，删除线
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }], // 列表
+            ['blockquote'], // 引用，代码块
+            ['code-block', 'image', 'video'] // 上传图片、上传视频
+          ]
+        }
+      },
       formDate: {
         subjectID: '', // 学科
         catalogID: '', // 目录
