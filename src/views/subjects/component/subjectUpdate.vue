@@ -109,4 +109,16 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+
+::v-deep .el-dialog__header{
+    background: #409eff;
+    border-radius: 10px 10px 0 0;
+    padding: 20px 20px 10px;
+    .el-dialog__title{
+        color: #fff;
+        line-height: 24px;
+        font-size: 18px;
+    }
+}
+</style>

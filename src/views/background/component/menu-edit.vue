@@ -18,19 +18,23 @@
       <el-form-item label="权限组名称" label-width="200px">
         <el-select
           ref="deptSelect"
-          v-model="formData.titles"
+          v-model="formData.pid"
           placeholder="请选择部门"
           style="width: 50%"
           @focus="getMenuList"
         >
-          <el-option style="padding: 0" value="" class="treeOption">
-            <el-tree
-              default-expand-all
-              :data="treeData"
-              :props="defaultProps"
-              @node-click="nodeClick"
-            />
-          </el-option>
+          <el-option label="主导航" :value="0" />
+          <el-tree
+            default-expand-all
+            :data="treeData"
+            :props="defaultProps"
+            @node-click="nodeClick"
+          >
+            <template #default="{data }">
+              <el-option style="padding: 0" :label="data.title" :value="data.id" />
+            </template>
+          </el-tree>
+
         </el-select>
       </el-form-item>
       <el-form-item label="权限代码" prop="code" label-width="200px">
@@ -72,8 +76,7 @@ export default {
         code: '', // 菜单代码
         pid: 0, // 父 id
         is_point: true, // 	是否权限点
-        title: '', // 菜单标题
-        titles: '' // 菜单标题
+        title: '' // 菜单标题
       },
       treeData: [], // 权限组名称，来接受树形结构
       // value: false, // 禁用
@@ -99,6 +102,10 @@ export default {
   },
 
   methods: {
+    foo(row) {
+      console.log(row)
+      return row
+    },
     value() {
       if (this.formData.id) {
         return true
@@ -137,7 +144,7 @@ export default {
     // 点击树形组件子节点
     nodeClick(data) {
       // if (data.children && data.children.length > 0) return
-      this.formData.titles = data.title
+      this.titles = data.title
       this.formData.pid = data.id
       this.$refs.deptSelect.blur() // 失去焦点
     },
@@ -152,7 +159,6 @@ export default {
         })
       })
       this.treeData = data
-      console.log('处理完后的', this.treeData)
     },
     // 回显数据
     async getMenuDetail(id) {
@@ -161,6 +167,7 @@ export default {
       for (const key in this.formData) {
         this.formData[key] = data[key]
       }
+      console.log(this.formData)
     }
   }
 }
@@ -173,5 +180,15 @@ export default {
   &::-webkit-scrollbar {
     width: 0 !important;
   }
+}
+::v-deep .el-dialog__header{
+    background: #409eff;
+    border-radius: 10px 10px 0 0;
+    padding: 20px 20px 10px;
+    .el-dialog__title{
+        color: #fff;
+        line-height: 24px;
+        font-size: 18px;
+    }
 }
 </style>

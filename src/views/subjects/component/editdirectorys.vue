@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       formData: {
-        subjectID: 1, // 所属学科
+        subjectID: '', // 所属学科
         directoryName: '' // 学科名称
       },
       list: [], // 学科列表
@@ -76,9 +76,10 @@ export default {
     // 关闭弹层|取消
     closeDialog() {
       this.formData = {
-        subjectID: 1, // 所属学科
+        subjectID: '', // 所属学科
         directoryName: '' // 学科名称
       }
+      this.$refs.directoryFrom.resetFields()
       this.$emit('update:showDialog', false)
     },
     // 点击确定
@@ -109,11 +110,21 @@ export default {
     },
     async getDirectorSimple() {
       const data = await getsubjectSimpleDetailApi()
-      console.log(data)
       this.list = data
     }
   }
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+::v-deep .el-dialog__header{
+    background: #409eff;
+    border-radius: 10px 10px 0 0;
+    padding: 20px 20px 10px;
+    .el-dialog__title{
+        color: #fff;
+        line-height: 24px;
+        font-size: 18px;
+    }
+}
+</style>

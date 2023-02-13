@@ -19,3 +19,7 @@ export const editTagsApi = (data) => request.put(`/tags/${data.id}`, data)
  *  获取标签详情
  * **/
 export const gettagsDetaliApi = (id) => request.get(`/tags/${id}`)
+/**
+ * 禁用启用状态
+ */
+export const editTagsStateApi = (id, state) => request.post(`/tags/${id}/${state}`)

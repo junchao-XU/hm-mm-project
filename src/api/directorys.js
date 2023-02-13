@@ -27,3 +27,7 @@ export const editDirectorsApi = (data) =>
  *  获取目录详情
  * **/
 export const getDirectorsDetailApi = (id) => request.get(`/directorys/${id}`)
+/**
+ * 修改状态
+ */
+export const editDirectorStateApi = (id, state) => request.post(`/directorys/${id}/${state}`)

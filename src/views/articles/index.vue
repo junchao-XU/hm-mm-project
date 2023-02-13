@@ -47,7 +47,11 @@
             type="index"
             :index="indexFn"
           />
-          <el-table-column prop="title" label="文章标题" width="400" />
+          <el-table-column prop="title" label="文章标题" width="400">
+            <template v-slot="{row}">
+              {{ row.title }} <i v-if="row.videoURL" href="javascript" style="color: blue;" class="el-icon-film" @click="voidShow = true" />
+            </template>
+          </el-table-column>
           <el-table-column prop="visits" label="阅读数" />
           <el-table-column prop="username" label="录入人" />
           <el-table-column prop="createTime" label="录入时间" width="172">
@@ -99,6 +103,16 @@
           @getPageNo="getPageNo"
         />
 
+        <!-- 视频弹窗 -->
+        <el-dialog :visible="voidShow" custom-class="elDialog" @close="voidShow = false">
+          <video
+            src="https://jackson-1258977884.cos.ap-beijing.myqcloud.com/video.mp4"
+            controls
+            loop
+            autoplay
+            muted
+          />
+        </el-dialog>
       </el-card>
     </div>
 
@@ -137,7 +151,8 @@ export default {
       showDialog: false, // 新增弹层
       articleDialog: false, // 预览弹层
       total: 0, // 总数量
-      flag: false
+      flag: false,
+      voidShow: false
     }
   },
   created() {
@@ -268,4 +283,24 @@ export default {
 }
 }
 
+::v-deep .elDialog .el-dialog__header {
+padding: 0;
+}
+::v-deep .elDialog {
+padding: 50px 5px 5px 8px;
+background-color: rgba(0, 0, 0, 0.5);
+}
+::v-deep .el-dialog__headerbtn .el-dialog__close {
+ width: 40px;
+ height: 40px;
+ border-radius: 20px;
+ background: rgba(0, 0, 0, 0.3);
+ margin-top: -10px;
+}
+::v-deep .elDialog .el-dialog__body {
+ padding: 0;
+}
+::v-deep .el-icon-close:before {
+ line-height: 40px;
+}
 </style>

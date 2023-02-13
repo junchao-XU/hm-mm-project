@@ -37,8 +37,16 @@
         <el-table-column prop="id" label="序号" />
         <el-table-column prop="subjectName" label="学科名称" />
         <el-table-column prop="username" label="创建者" />
-        <el-table-column prop="addDate" label="创建日期" />
-        <el-table-column prop="isFrontDisplay" label="前台是否显示" />
+        <el-table-column prop="addDate" label="创建日期">
+          <template v-slot="{row}">
+            {{ row.addDate | parseTime('{y}-{m}-{d}') }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="isFrontDisplay" label="前台是否显示">
+          <template v-slot="{row}">
+            {{ row.isFrontDisplay === 1 ? '是':'否' }}
+          </template>
+        </el-table-column>
         <el-table-column prop="twoLevelDirectory" label="二级目录" />
         <el-table-column prop="tags" label="标签" />
         <el-table-column prop="totals" label="题目数量" />
@@ -47,7 +55,7 @@
             <el-button type="text" @click="classifyfn(row)">
               学科分类
             </el-button>
-            <el-button type="text" @click="labelfn(row.id)">学科标签</el-button>
+            <el-button type="text" @click="labelfn(row)">学科标签</el-button>
             <el-button type="text" @click="editfn(row.id)">修改</el-button>
             <el-button type="text" @click="deletefn(row.id)">删除</el-button>
           </template>
@@ -55,6 +63,7 @@
       </el-table>
       <!-- 分页组件 -->
       <Pagination
+        style="margin-top: 20px;"
         :page-no="page.page"
         :page-size="page.pagesize"
         :total="counts"
@@ -117,8 +126,14 @@ export default {
       })
     },
     // 学科标签
-    labelfn() {
-      // this.$router.push({path:'/'})
+    labelfn(row) {
+      this.$router.push({
+        path: '/subjects/tags',
+        query: {
+          id: row.id,
+          name: row.subjectName
+        }
+      })
     },
     //  编辑
     editfn(id) {

@@ -1,18 +1,18 @@
-<template>
+<mplate>
   <div class="app-container">
     <el-card class="box-card">
       <el-row type="flex" style="margin-bottom: 10px">
         <el-col>
           <span class="text">标签名称</span>
           <el-input
-            v-model="tagName"
+            v-model="distObj.tagName"
             style="width: 190px"
             class="left"
             size="small"
           />
           <span class="text">状态</span>
           <el-select
-            v-model="state"
+            v-model="distObj.state"
             placeholder="请选择"
             size="small"
             style="margin-left: 10px"
@@ -50,19 +50,29 @@
         <el-table-column prop="subjectName" label="所属学科" />
         <el-table-column prop="tagName" label="目录名称" />
         <el-table-column prop="username" label="创建者" />
-        <el-table-column prop="addDate" label="创建日期" />
-        <el-table-column prop="state" label="状态" />
+        <el-table-column prop="addDate" label="创建日期">
+          <template v-slot="{row}">
+            {{ row.addDate | parseTime }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="state" label="状态">
+          <template v-slot="{row}">
+            {{ row.state === 1 ?'已启用':'已禁用' }}
+          </template>
+        </el-table-column>
 
         <el-table-column label="操作" width="240">
           <template #default="{ row }">
-            <el-button type="text" @click="labelfn(row.id)">禁用</el-button>
-            <el-button type="text" @click="editfn(row.id)">修改</el-button>
+            <el-button v-if="row.state === 1" type="text" @click="Banfn(row.id,0)">禁用</el-button>
+            <el-button v-else type="text" @click="Banfn(row.id,1)">启用</el-button>
+            <el-button :disabled="row.state === 1" type="text" @click="editfn(row.id)">修改</el-button>
             <el-button type="text" @click="deletefn(row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <!-- 分页组件 -->
       <Pagination
+        style="margin-top: 20px;"
         :page-no="page.page"
         :page-size="page.pagesize"
         :total="counts"
@@ -78,17 +88,18 @@
 </template>
 
 <script>
-import { gettagsListApi, delTagsListApi } from '@/api/tags'
-
+import { gettagsListApi, delTagsListApi, editTagsStateApi } from '@/api/tags'
 import EditTage from './component/edittags'
-
 export default {
   components: { EditTage },
   data() {
     return {
       flag: false,
-      tagName: '', // 标签名称
-      state: 1, // 状态
+      subjectID: this.$route.query.id,
+      distObj: {
+        // tagName: '', // 标签名称
+        // state: '' // 状态
+      },
       counts: 2, // 总记录数
       page: {
         page: 1, // 当前页数
@@ -97,6 +108,15 @@ export default {
       list: [],
 
       showDialog: false // 新增弹层
+    }
+  },
+  watch: {
+    '$route': {
+      deep: true,
+      handler() {
+        console.log(this.subjectID)
+        this.gettagsList()
+      }
     }
   },
   created() {
@@ -116,15 +136,24 @@ export default {
       this.showDialog = true
       this.$refs.EditTage.getDirectorSimple()
     },
+
     // 获取目录列表
-    async gettagsList(tagName) {
-      const data = await gettagsListApi({ ...this.page, tagName })
+    async gettagsList() {
+      let data = {}
+      if (this.$route.query.id !== undefined) {
+        data = await gettagsListApi({ ...this.page, ...this.distObj, subjectID: this.subjectID })
+      } else {
+        data = await gettagsListApi({ ...this.page, ...this.distObj })
+      }
       this.list = data.items
       this.counts = data.counts
     },
 
     // 禁用
-    labelfn() {},
+    async Banfn(id, state) {
+      await editTagsStateApi(id, state)
+      this.gettagsList()
+    },
     //  编辑
     editfn(id) {
       this.$refs.EditTage.gettagsDetali(id)
@@ -139,18 +168,19 @@ export default {
         // eslint-disable-next-line space-before-function-paren
         .then(async () => {
           await delTagsListApi(id)
-          this.gettagsList()
+          this.gettagsList(this.distObj)
           this.$message.success('删除用户成功')
         })
     },
     // 搜索
     search() {
       this.flag = true
-      this.gettagsList(this.tagName)
+      this.gettagsList()
     },
     // 清除
     clear() {
       this.flag = false
+      this.distObj = {}
       this.gettagsList()
     }
   }

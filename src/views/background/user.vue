@@ -60,8 +60,9 @@
           </template>
         </el-table-column>
       </el-table>
+
       <!-- 分页组件 -->
-      <el-row
+      <!-- <el-row
         type="flex"
         justify="end"
         align="center"
@@ -76,12 +77,16 @@
           layout="prev,pager,next,sizes,jumper"
           @current-change="changePage"
         />
-      </el-row>
+      </el-row> -->
+      <Pagination style="margin-top: 20px;" :total="counts" :page-size="page.pagesize" :page-no="page.page" @getPageNo="changePage" />
+
+      <!-- 弹窗 -->
       <Update
         ref="updataDialog"
         :show-dialog.sync="showDialog"
         @update="getUserList()"
       />
+
     </el-card>
   </div>
 </template>

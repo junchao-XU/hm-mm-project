@@ -8,7 +8,7 @@
             size="small"
             type="success"
             icon="el-icon-edit"
-            @click="showDialog = true"
+            @click="showMenuDialog = true"
           >
             添加菜单
           </el-button>
@@ -43,6 +43,8 @@
         </el-table-column>
       </el-table>
     </el-card>
+    <!-- 弹层 -->
+    <MenuEdit ref="menuEdit" :show-menu-dialog.sync="showMenuDialog" @render="getMenuList" />
   </div>
 </template>
 
@@ -72,8 +74,7 @@ export default {
       this.$confirm('确认删除吗？', {
         confirmButtonText: '删除',
         cancelButtonText: '取消'
-        // eslint-disable-next-line space-before-function-paren
-      }).then(async () => {
+      }).then(async() => {
         await DelMenuListApi(id)
         this.getMenuList()
         this.$message.success('删除用户成功')
@@ -81,7 +82,6 @@ export default {
     },
 
     async getMenuList() {
-      // const list = await getMenuListApi()
       const data = tranListToTreeData(await getMenuListApi(), null)
       data.forEach((item) => {
         item.children = item.childs
