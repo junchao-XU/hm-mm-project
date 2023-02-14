@@ -61,7 +61,7 @@ export default {
   display: block;
   background-color: #1495fa;
   height: 70px;
-  box-shadow: 0 -46px 6px -48px #000 inset;
+  box-shadow: 0 -46px 9px -48px #000 inset;
 }
 
 </style>

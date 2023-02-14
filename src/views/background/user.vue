@@ -4,13 +4,13 @@
       <PageTools>
         <template #left>
           <el-input
-            v-model="input"
+            v-model="username"
             class="left"
             size="small"
             placeholder="根据用户名搜索"
           />
-          <el-button size="mini"> 清空 </el-button>
-          <el-button size="mini" type="primary"> 搜索 </el-button>
+          <el-button size="mini" @click="clear"> 清空 </el-button>
+          <el-button size="mini" type="primary" @click="search"> 搜索 </el-button>
         </template>
         <template #right>
           <el-button
@@ -84,14 +84,13 @@ export default {
   },
   data() {
     return {
+      username: '',
       page: {
         page: 1,
         pagesize: 10 // 每页条数
-        // keyword: ''
       },
       counts: 1, // 总数
       list: [],
-      input: '',
       showDialog: false, // 新增弹层
       loading: false // 加载状态
     }
@@ -101,9 +100,9 @@ export default {
   },
   methods: {
     // 用户列表
-    async getUserList() {
+    async getUserList(username) {
       this.loading = true
-      const data = await getUserListApi(this.page)
+      const data = await getUserListApi({ ...this.page, username })
       this.counts = data.counts
       this.list = data.list
       this.loading = false
@@ -138,6 +137,15 @@ export default {
           this.getUserList()
           this.$message.success('删除用户成功')
         })
+    },
+    // 搜索
+    search() {
+      this.getUserList(this.username)
+    },
+    // 清除
+    clear() {
+      this.username = ''
+      this.getUserList()
     }
   }
 }
