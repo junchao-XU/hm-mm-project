@@ -261,6 +261,7 @@ export default {
   components: { PreviewItem, AuditItem },
   data() {
     return {
+      flag: false,
       Loading: false,
       AudShowDialog: false, // 审核弹窗
       PreShowDialog: false, // 预览弹窗
@@ -339,11 +340,17 @@ export default {
       this.DisciplineList = res
     },
     // 获取精选题库列表
-    async getSelectList(formData) {
+    async getSelectList() {
+      let data = {}
       this.Loading = true
-      const { counts, items } = await getSelectListApi({ ...this.page, ...formData })
-      this.counts = counts
-      this.SelectList = items
+      if (this.flag) {
+        data = await getSelectListApi({ ...this.page, ...this.formData })
+      } else {
+        data = await getSelectListApi({ ...this.page })
+      }
+
+      this.counts = data.counts
+      this.SelectList = data.items
       this.Loading = false
     },
     /**
@@ -389,11 +396,13 @@ export default {
     // 搜索
     search() {
       if (Object.values(this.formData).join('') !== '') {
+        this.flag = true
         this.getSelectList(this.formData)
       }
     },
     // 清除
     clear() {
+      this.flag = false
       this.formData = {}
       this.getSelectList()
     },

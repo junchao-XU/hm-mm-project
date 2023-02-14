@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-card v-loding="loading" class="box-card">
+    <el-card v-loading="loading" class="box-card">
 
       <!-- 顶部表单 -->
       <PageTools>

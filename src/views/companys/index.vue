@@ -50,7 +50,7 @@
           <el-col :span="6">
             <div style="padding-left: 40px;">
               <el-button size="medium" @click="clear">清除</el-button>
-              <el-button size="medium" type="primary" @click="getCompanysList(enterpriseData)">搜索</el-button>
+              <el-button size="medium" type="primary" @click="search">搜索</el-button>
             </div>
           </el-col>
           <el-col :span="12">
@@ -150,6 +150,7 @@ export default {
   components: { AddItem },
   data() {
     return {
+      flag: false,
       loading: false,
       showDialog: false, // 弹窗
       provinceList: [], // 省份列表
@@ -194,11 +195,16 @@ export default {
       })
     },
     // 获取企业管理列表
-    async getCompanysList(enterpriseData) {
+    async getCompanysList() {
       this.loading = true
-      const { counts, items } = await getCompanysListApi({ ...this.page, ...enterpriseData })
-      this.CompanysList = items
-      this.counts = counts
+      let data = {}
+      if (this.flag) {
+        data = await getCompanysListApi({ ...this.page, ...this.enterpriseData })
+      } else {
+        data = await getCompanysListApi({ ...this.page })
+      }
+      this.CompanysList = data.items
+      this.counts = data.counts
       this.loading = false
     },
     // 获得当前的页数
@@ -241,6 +247,11 @@ export default {
     // 清除
     clear() {
       this.enterpriseData = {}
+      this.getCompanysList()
+    },
+    // 搜索
+    search() {
+      this.flag = true
       this.getCompanysList()
     }
   }

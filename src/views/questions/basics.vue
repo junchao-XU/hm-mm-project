@@ -255,15 +255,15 @@ export default {
       async handler(newVal) {
         this.getCityList(newVal)
       }
-    },
-    formData: {
-      deep: true,
-      handler(newVal) {
-        if (Object.values(newVal).join('') === '') {
-          this.formData = {}
-        }
-      }
     }
+    // formData: {
+    //   deep: true,
+    //   handler(newVal) {
+    //     if (Object.values(newVal).join('') === '') {
+    //       this.formData = {}
+    //     }
+    //   }
+    // }
   },
   created() {
     this.getDiscipline()
